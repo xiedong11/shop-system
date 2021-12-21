@@ -1,27 +1,27 @@
 <template>
-    <van-button type="primary" @click="aaa">主要按钮</van-button>
-    <!--<div> oooo</div>-->
-    <SignUp></SignUp>
-    <div></div>
+    <!--<van-button type="primary" @click="aaa">主要按钮</van-button>-->
+    <!--&lt;!&ndash;<div> oooo</div>&ndash;&gt;-->
+    <!--<SignUp></SignUp>-->
+    <div style="background-color: yellow;height: 100px"></div>
 </template>
 
 <script>
 
 
-    import {useRouter} from "vue-router";
+    // import {useRouter} from "vue-router";
     import {onMounted, reactive, toRefs} from "vue";
-    import SignUp from "./SignUp";
+    // import SignUp from "./SignUp";
 
 
     export default {
         name: "RegistrationInProgress",
         components: {
-            SignUp
+            // SignUp
         },
 
 
         setup() {
-            const router = useRouter();
+            // const router = useRouter();
             const state = reactive({
                 // language: route.params.language ? route.params.language : 'chs',
                 // keyword: route.params.keyword ? route.params.keyword : '',
@@ -52,15 +52,15 @@
             //         console.log(error);
             //     })
             // };
-            const aaa = ()=> {
-                // searchNewsListFun()
-                // alert(99999)
-                router.push({
-                    path:'/SingUp'
-                })
-            };
+            // const aaa = ()=> {
+            //     // searchNewsListFun()
+            //     // alert(99999)
+            //     router.push({
+            //         path:'/SingUp'
+            //     })
+            // };
             return {
-                ...toRefs(state),aaa
+                ...toRefs(state)
             }
 
         }

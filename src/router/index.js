@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 const routes = [
-    { path: '/', component: () => import(/* webpackChunkName: "channelList" */ '../components/RegistrationInProgress') }, //首页
+   // { path: '/', component: () => import(/* webpackChunkName: "channelList" */ '../components/RegistrationInProgress') }, //首页
+
+    { path: '/', component: () => import(/* webpackChunkName: "channelList" */ '../views/activity') }, //首页
     { path: '/SingUp', component: () => import(/* webpackChunkName: "channelList" */ '../components/SignUp') }, //频道页
 
 ];
