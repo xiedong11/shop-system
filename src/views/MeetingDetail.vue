@@ -27,7 +27,7 @@
 
         <img class="img-call" src="../image/ic_call.png">
 
-        <span class="btn-sign-up">我要报名</span>
+        <span class="btn-sign-up" v-on:click="onClickSignUp">我要报名</span>
     </div>
 
     <div class="meeting-intro">
@@ -53,8 +53,6 @@
     </div>
 
 
-
-
     <div class="meeting-detail-bottom-view">
         <span class="btn-meeting-dynamic">会议动态</span>
         <span class="btn-meeting-question">报名问答</span>
@@ -65,9 +63,20 @@
 <script>
     export default {
         name: "ActivityDetail",
-        methods:{
-            closePage:function () {
+        methods: {
+            closePage: function () {
                 this.$router.back()
+            },
+            onClickSignUp: function () {
+
+                let isLogin = window.qbJsBridge.isLogin()
+
+                if (isLogin.toString() == "true") {
+                    window.qbJsBridge.showToast('跳转报名页...')
+                } else {
+                    window.qbJsBridge.jumpLoginPage()
+                }
+
             }
         }
     }
@@ -233,7 +242,7 @@
         height: 50px;
         box-shadow: 5px 5px 5px 10px #F0F0F0;
         background: white;
-        justify-content: right;
+        justify-content: flex-end;
 
         .btn-meeting-dynamic {
             margin-top: auto;
