@@ -2,7 +2,9 @@
     <!--<van-button type="primary" @click="aaa">主要按钮</van-button>-->
     <!--&lt;!&ndash;<div> oooo</div>&ndash;&gt;-->
     <!--<SignUp></SignUp>-->
-    <div style="background-color: yellow;height: 100px"></div>
+    <div @click="goMeetingDetailPage" style="background-color: yellow;height: 100px">
+        <span>点击进详情</span>
+    </div>
 </template>
 
 <script>
@@ -19,6 +21,11 @@
             // SignUp
         },
 
+        methods: {
+            goMeetingDetailPage: function () {
+                this.$router.push({path: '/MeetingDetail'})
+            }
+        },
 
         setup() {
             // const router = useRouter();
@@ -70,7 +77,7 @@
 
 <style scoped>
 
-    .van-button{
+    .van-button {
         width: 90px;
         background-color: #189488;
     }

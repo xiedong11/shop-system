@@ -1,6 +1,6 @@
 <template>
     <div class="meeting-detail-top-view">
-        <img class="meeting-detail-icon" src="../image/ic_back.png">
+        <img v-on:click="closePage" class="meeting-detail-icon" src="../image/ic_back.png">
         <img class="meeting-detail-icon" src="../image/ic_share.png">
     </div>
     <img class="meeting-detail-top-img" src="https://t7.baidu.com/it/u=2621658848,3952322712&fm=193&f=GIF">
@@ -40,33 +40,20 @@
         <img class="meeting-intro-arrow" src="../image/ic_arrow_down.png">
     </div>
 
-    <div class="meeting-news-view">
+    <div v-for='index in 10' :key='index'>
+        <div class="meeting-news-view">
 
-        <div>
-            <span>大煞风景阿斯顿发监考老师的肌肤可怜的撒娇路口发生打架双方都尽量克服恐惧拉屎的</span>
-            <span>中国新闻网  2017-12-12</span>
+            <div>
+                <span>大煞风景阿斯顿发监考老师的肌肤可怜的撒娇路口发生打架双方都尽量克服恐惧拉屎的</span>
+                <span>中国新闻网  2017-12-12</span>
 
+            </div>
+            <img src="https://t7.baidu.com/it/u=1423490396,3473826719&fm=193&f=GIF">
         </div>
-        <img src="https://t7.baidu.com/it/u=1423490396,3473826719&fm=193&f=GIF">
     </div>
-    <div class="meeting-news-view">
 
-        <div>
-            <span>大煞风景阿斯顿发监考老师的肌肤可怜的撒娇路口发生打架双方都尽量克服恐惧拉屎的</span>
-            <span>中国新闻网  2017-12-12</span>
 
-        </div>
-        <img src="https://t7.baidu.com/it/u=1423490396,3473826719&fm=193&f=GIF">
-    </div>
-    <div class="meeting-news-view">
 
-        <div>
-            <span>大煞风景阿斯顿发监考老师的肌肤可怜的撒娇路口发生打架双方都尽量克服恐惧拉屎的</span>
-            <span>中国新闻网  2017-12-12</span>
-
-        </div>
-        <img src="https://t7.baidu.com/it/u=1423490396,3473826719&fm=193&f=GIF">
-    </div>
 
     <div class="meeting-detail-bottom-view">
         <span class="btn-meeting-dynamic">会议动态</span>
@@ -77,7 +64,12 @@
 
 <script>
     export default {
-        name: "ActivityDetail"
+        name: "ActivityDetail",
+        methods:{
+            closePage:function () {
+                this.$router.back()
+            }
+        }
     }
 </script>
 
