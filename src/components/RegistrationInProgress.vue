@@ -11,6 +11,7 @@
     // import {useRouter} from "vue-router";
     import {onMounted, reactive, toRefs} from "vue";
     // import SignUp from "./SignUp";
+    import {getConferenceList} from "../../api/request";
 
 
     export default {
@@ -26,32 +27,34 @@
                 // language: route.params.language ? route.params.language : 'chs',
                 // keyword: route.params.keyword ? route.params.keyword : '',
                 // hideSearch: false,
-                // loading: false,
-                // finished: false,
-                // newsList: [],
-                // pageIndex: 1
+                loading: false,
+                finished: false,
+                qbUserId:"0000864909",
+                // status:0,
+                newsList: [],
+                page: 1
             });
             onMounted(() => {
-
+                getConferenceListFun();
             });
-            // const searchNewsListFun = ()=> {
-            //     getSearchNewsList({language: state.language,pageIndex: state.pageIndex,searchWord:state.keyword}).then(({ data })=>{
-            //         if(data.data.length>0){
-            //             data.data.forEach((item)=>{
-            //                 state.newsList.push(item);
-            //             });
-            //             state.pageIndex++;
-            //         }else{
-            //             // 数据全部加载完成
-            //             state.finished = true;
-            //         }
-            //         // 加载状态结束
-            //         state.loading = false;
-            //
-            //     }).catch((error)=>{
-            //         console.log(error);
-            //     })
-            // };
+            const getConferenceListFun = ()=> {
+                getConferenceList({qbUserId: state.language,page: state.page,size:10,status:0}).then(({ data })=>{
+                    if(data.data.length>0){
+                        data.data.forEach((item)=>{
+                            state.newsList.push(item);
+                        });
+                        state.page++;
+                    }else{
+                        // 数据全部加载完成
+                        state.finished = true;
+                    }
+                    // 加载状态结束
+                    state.loading = false;
+
+                }).catch((error)=>{
+                    console.log(error);
+                })
+            };
             // const aaa = ()=> {
             //     // searchNewsListFun()
             //     // alert(99999)
