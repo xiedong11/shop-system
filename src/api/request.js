@@ -7,11 +7,11 @@ const get = (url, params = {},type) =>
         type
     );
 
+// http://conf.qb.chinaqw.com
 
+const prefix = '/api';
 
-const prefix = 'http://conf.qb.chinaqw.com';
-
-const getConferenceList = data => get(`${prefix}/api/conference/getconferencelist?action=getConferenceList`, data, 'json');
+const getConferenceList = data => get(`${prefix}/api/conference/getconferencelist?action=getConferenceList`, data, 'aaa');
 
 //接口导出
 export {

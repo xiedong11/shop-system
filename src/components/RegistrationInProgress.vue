@@ -13,7 +13,7 @@
     // import {useRouter} from "vue-router";
     import {onMounted, reactive, toRefs} from "vue";
     // import SignUp from "./SignUp";
-    import {getConferenceList} from "../../api/request";
+    import {getConferenceList} from "../api/request";
 
 
     export default {
@@ -45,7 +45,7 @@
                 getConferenceListFun();
             });
             const getConferenceListFun = ()=> {
-                getConferenceList({qbUserId: state.language,page: state.page,size:10,status:0}).then(({ data })=>{
+                getConferenceList({qbUserId:"0000864909",page: state.page,size:10,status:0}).then(({ data })=>{
                     if(data.data.length>0){
                         data.data.forEach((item)=>{
                             state.newsList.push(item);
