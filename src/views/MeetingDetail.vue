@@ -61,6 +61,9 @@
 </template>
 
 <script>
+    import {getMeetingInfoDetail} from "../api/request";
+    import {onMounted} from "vue";
+
     export default {
         name: "ActivityDetail",
         methods: {
@@ -77,8 +80,25 @@
                     window.qbJsBridge.jumpLoginPage()
                 }
 
+            },
+
+        },
+        setup() {
+            onMounted(() => {
+                getMeetingInfoDetailResult();
+            });
+
+            const getMeetingInfoDetailResult = async () => {
+                let params = {
+                    'siteId': '91',
+                    'uid': '864950'
+                }
+                let reusult = await getMeetingInfoDetail(params)
+                console.log(reusult.data, 111)
             }
-        }
+        },
+
+
     }
 </script>
 
