@@ -3,26 +3,25 @@
         <img v-on:click="closePage" class="meeting-detail-icon" src="../image/ic_back.png">
         <img class="meeting-detail-icon" src="../image/ic_share.png">
     </div>
-    <img class="meeting-detail-top-img" src="https://t7.baidu.com/it/u=2621658848,3952322712&fm=193&f=GIF">
-
+    <img class="meeting-detail-top-img" :src="detailResult!=null?detailResult.coverImgOne:''"/>
 
     <div class="meeting-info">
 
-        <span class="meeting-name">会议名称会议名称</span>
+        <span class="meeting-name">{{detailResult!=null?detailResult.conferenceName:""}}</span>
 
         <div>
             <img src="../image/ic_time.png"/>
-            <span>2022.01.23 - 2022.02.29</span>
+            <span>{{detailResult!=null?detailResult.addTime:""}}</span>
         </div>
 
         <div>
             <img src="../image/ic_location.png"/>
-            <span>地点</span>
+            <span>{{detailResult!=null?detailResult.city:""}}</span>
         </div>
 
         <div>
             <img src="../image/ic_phone.png"/>
-            <span>86-10-321321321</span>
+            <span>{{detailResult!=null?detailResult.hotLine:""}}</span>
         </div>
 
         <img class="img-call" src="../image/ic_call.png">
@@ -62,7 +61,7 @@
 
 <script>
     import {getMeetingInfoDetail} from "../api/request";
-    import {onMounted} from "vue";
+    import {onMounted, toRefs, reactive} from "vue";
 
     export default {
         name: "ActivityDetail",
@@ -84,6 +83,10 @@
 
         },
         setup() {
+
+            const state = reactive({
+                detailResult: null
+            });
             onMounted(() => {
                 getMeetingInfoDetailResult();
             });
@@ -94,8 +97,13 @@
                     'uid': '864950'
                 }
                 let reusult = await getMeetingInfoDetail(params)
+                state.detailResult = reusult.data
                 console.log(reusult.data, 111)
             }
+            return {
+                ...toRefs(state)
+            }
+
         },
 
 
@@ -132,7 +140,7 @@
         background: white;
         display: flex;
         color: #666666;
-        font-size: 0.6rem;
+        font-size: 0.7rem;
         flex-direction: column;
 
         .meeting-name {
