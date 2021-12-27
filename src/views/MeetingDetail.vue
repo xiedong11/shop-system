@@ -39,18 +39,20 @@
         <img class="meeting-intro-arrow" src="../image/ic_arrow_down.png">
     </div>
 
-    <div v-for='index in 10' :key='index'>
-        <div class="meeting-news-view">
+    <div class="meeting-detail-news-list-view">
+        <div v-for='(item,index) in newsListArray' :key='index'>
+            <div class="meeting-news-view">
 
-            <div>
-                <span>大煞风景阿斯顿发监考老师的肌肤可怜的撒娇路口发生打架双方都尽量克服恐惧拉屎的</span>
-                <span>中国新闻网  2017-12-12</span>
+                <div>
+                    <span>{{item.title}}</span>
+                    <span>{{item.source}}  {{item.pubtime.split(' ')[0]}}</span>
 
+                </div>
+                <img :src="item.img">
             </div>
-            <img src="https://t7.baidu.com/it/u=1423490396,3473826719&fm=193&f=GIF">
         </div>
-    </div>
 
+    </div>
 
     <div class="meeting-detail-bottom-view">
         <span class="btn-meeting-dynamic">会议动态</span>
@@ -60,8 +62,9 @@
 </template>
 
 <script>
-    import {getMeetingInfoDetail} from "../api/request";
+    import {getMeetingInfoDetail, getMeetingNewsList} from "../api/request";
     import {onMounted, toRefs, reactive} from "vue";
+    import * as Base64 from "js-base64";
 
     export default {
         name: "ActivityDetail",
@@ -85,10 +88,12 @@
         setup() {
 
             const state = reactive({
-                detailResult: null
+                detailResult: null,
+                newsListArray: []
             });
             onMounted(() => {
                 getMeetingInfoDetailResult();
+                getMeetingNewsListReuslt();
             });
 
             const getMeetingInfoDetailResult = async () => {
@@ -98,8 +103,29 @@
                 }
                 let reusult = await getMeetingInfoDetail(params)
                 state.detailResult = reusult.data
-                console.log(reusult.data, 111)
+
             }
+
+
+            const getMeetingNewsListReuslt = async () => {
+
+                let data = {
+                    "action": "getMeetingDetail",
+                    'meetingId': '92',
+                    'page': 1,
+                    'pageSize': 10
+                }
+                let base64Str = Base64.encode(JSON.stringify(data))
+
+                let params = {
+                    "data": base64Str
+                }
+                let reusult = await getMeetingNewsList(params)
+
+                state.newsListArray = reusult.meeting.report
+            }
+
+
             return {
                 ...toRefs(state)
             }
@@ -223,42 +249,51 @@
         }
     }
 
-    .meeting-news-view {
-        margin-top: 1px;
-        padding: 10px 0px;
-        background: white;
+    .meeting-detail-news-list-view {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
+        padding-bottom: 50px;
 
-        div {
-            text-align: start;
+        .meeting-news-view {
+            margin-top: 1px;
+            padding: 10px 0px;
+            background: white;
             display: flex;
-            flex-direction: column;
-            margin-left: 10px;
-            margin-right: 10px;
+            flex-direction: row;
 
-            :first-child {
-                margin-top: 10px;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                -webkit-box-orient: vertical;
+            div {
+                text-align: start;
+                display: flex;
+                flex-direction: column;
+                margin-left: 10px;
+                margin-right: 10px;
+
+                :first-child {
+                    margin-top: 10px;
+                    overflow: hidden;
+                    word-break: break-all;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                }
+
+                :nth-child(2) {
+                    margin-top: 5px;
+                    font-size: .8rem;
+                    color: #666666;
+                }
             }
 
-            :nth-child(2) {
-                margin-top: 5px;
-                font-size: .8rem;
-                color: #666666;
+            img {
+                margin-right: 10px;
+                height: 80px;
+                margin-left: auto;
+                width: 100px;
             }
-        }
-
-        img {
-            margin-right: 10px;
-            height: 80px;
-            width: 100px;
         }
     }
+
 
     .meeting-detail-bottom-view {
         display: flex;

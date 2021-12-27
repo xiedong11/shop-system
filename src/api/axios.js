@@ -1,4 +1,7 @@
 import axios from "axios";
+import Qs from "qs";
+import * as Base64 from "js-base64";
+
 
 //设置超时
 axios.defaults.timeout = 10000;
@@ -8,18 +11,21 @@ export default {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'post',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
                 url,
-                data
+                data: Qs.stringify(data)
             })
                 .then(res => {
-                    resolve(res)
+                    resolve(JSON.parse(Base64.decode(res.data)))
                 })
                 .catch(err => {
                     reject(err)
                 });
         })
     },
-    get(url, data,type) {
+    get(url, data, type) {
         if (type == 'json' && Object.keys(data).length) {
             for (let key in data) {
                 url += `/${data[key]}`;
@@ -37,7 +43,7 @@ export default {
                         reject(err)
                     })
             })
-        }else {
+        } else {
             return new Promise((resolve, reject) => {
                 axios({
                     // method: 'get',
