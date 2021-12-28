@@ -8,6 +8,7 @@
     <div class="meeting-info">
 
         <span class="meeting-name">{{detailResult!=null?detailResult.conferenceName:""}}</span>
+        <span class="meeting-status">{{getApplyStatus(detailResult)}}</span>
 
         <div>
             <img src="../image/ic_time.png"/>
@@ -24,7 +25,17 @@
             <span>{{detailResult!=null?detailResult.hotLine:""}}</span>
         </div>
 
-        <img class="img-call" src="../image/ic_call.png">
+        <div class="meeting-call-view">
+            <img class="img-call" :onclick="jumpChatPage" src="../image/ic_group.png">
+            <div/>
+            <img class="img-call" :onclick="onCallPhone" src="../image/ic_call.png">
+        </div>
+
+
+        <div class="check-sign-up">
+            <span>查看报名</span>
+            <span>会议行程</span>
+        </div>
 
         <span class="btn-sign-up" v-on:click="onClickSignUp">我要报名</span>
     </div>
@@ -40,7 +51,7 @@
     </div>
 
     <div class="meeting-detail-news-list-view">
-        <div v-for='(item,index) in newsListArray' :key='index'>
+        <div v-for='(item,index) in newsListArray' :key='index' @click="onNewsItemClick(item)">
             <div class="meeting-news-view">
 
                 <div>
@@ -55,16 +66,18 @@
     </div>
 
     <div class="meeting-detail-bottom-view">
-        <span class="btn-meeting-dynamic">会议动态</span>
-        <span class="btn-meeting-question">报名问答</span>
+        <span class="btn-meeting-dynamic" :onclick="jumpMeetingDynamicPage">会议动态</span>
+        <span class="btn-meeting-question" :onclick="jumpMeetingAskPage">报名问答</span>
     </div>
 
 </template>
 
 <script>
     import {getMeetingInfoDetail, getMeetingNewsList} from "../api/request";
+    import {Dialog} from 'vant';
     import {onMounted, toRefs, reactive} from "vue";
     import * as Base64 from "js-base64";
+
 
     export default {
         name: "ActivityDetail",
@@ -83,12 +96,54 @@
                 }
 
             },
+            getApplyStatus: function (result) {
+                let applyStatus = (result == null ? "" : result.applyStatus)
+                let statusStr = ''
 
+                if (applyStatus == "arrived") {
+                    statusStr = "审核状态:您已在会议现场签到成功。"
+                } else if (applyStatus == "checking") {
+                    statusStr = "审核状态:您的报名信息已提交，正在审核中，请耐心等待。"
+                } else if (applyStatus == "accept") {
+                    statusStr = "审核状态:您的资料审核通过，报名成功，请等待会议联络员与您联系。"
+                }
+
+                return statusStr
+            },
+
+            jumpMeetingAskPage: function () {
+                let conferenceName = this.detailResult.conferenceName
+                window.qbJsBridge.jumpMeetingAskPage(this.meetingId, conferenceName)
+            },
+
+            jumpMeetingDynamicPage: function () {
+                window.qbJsBridge.jumpMeetingDynamicPage(this.meetingId, this.detailResult.applyStatus, this.detailResult.conferenceName)
+            },
+            jumpChatPage: function () {
+                window.qbJsBridge.jumpChatPage(this.meetingId)
+            },
+            onCallPhone: function () {
+                Dialog.confirm({
+                    title: '拨打电话？',
+                    message: this.detailResult.hotLine,
+                })
+                    .then(() => {
+                        window.location.href = "tel:" + this.detailResult.hotLine;
+                    })
+                    .catch(() => {
+                        // on cancel
+                    });
+            },
+            onNewsItemClick:function (item) {
+                console.log(JSON.stringify(item),11);
+                window.qbJsBridge.jumpNewsDetailPage(JSON.stringify(item))
+            }
         },
         setup() {
 
             const state = reactive({
                 detailResult: null,
+                meetingId: '91',
                 newsListArray: []
             });
             onMounted(() => {
@@ -176,6 +231,13 @@
             font-size: 1rem;
         }
 
+        .meeting-status {
+            background: antiquewhite;
+            margin: 10px 15px;
+            padding: 5px 10px;
+        }
+
+
         div {
             margin: 5px 0px;
 
@@ -189,13 +251,27 @@
             }
         }
 
-        .img-call {
-            margin-top: 60px;
-            right: 20px;
+        .meeting-call-view {
             position: absolute;
-            height: 30px;
-            width: 30px;
+            margin-top: 130px;
+            right: 20px;
+            display: flex;
+            flex-direction: row;
+
+            div {
+                width: 2px;
+                height: 30px;
+                margin-top: auto;
+                margin-bottom: auto;
+                margin-left: 20px;
+                background: #F0F0F0;
+            }
+
+            .img-call {
+                height: 25px;
+            }
         }
+
 
         .btn-sign-up {
             border-radius: 50px;
@@ -205,6 +281,21 @@
             font-size: 0.9rem;
             background: #1f90ff;;
             margin: 15px 15%;
+        }
+
+        .check-sign-up {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+
+            span {
+                margin: 10px;
+                border-radius: 30px;
+                padding: 6px 30px;
+                border: 1px solid #1f90ff;
+                color: #1f90ff;
+                font-size: 0.9rem;
+            }
         }
 
 
