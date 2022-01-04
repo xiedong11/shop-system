@@ -29,11 +29,14 @@ const getMeetingInfoDetail = (data) => get("circle/getConference", data)
 
 const getMeetingNewsList = (data) => post('qwapi/getMeetingReport.do', data)
 
+const getMeetingEnrollInfo = (data) => get('api/cusContent/getEnrollInfo', data) //确认报名信息接口
+
 //接口导出
 export {
     getConferenceList,
     getMeetingInfoDetail,
     getMeetingNewsList,
-    getApplyData
+    getApplyData,
+    getMeetingEnrollInfo
 
 }

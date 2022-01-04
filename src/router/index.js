@@ -7,6 +7,7 @@ const routes = [
     {path: '/SingUp', component: () => import(/* webpackChunkName: "channelList" */ '../components/SignUp')}, //频道页
     {path: '/MeetingDetail', component: () => import(/* webpackChunkName: "channelList" */ '../views/MeetingDetail')}, //活动详情
     {path: '/ApplyData', component: () => import(/* webpackChunkName: "channelList" */ '../views/ApplyData')}, //活动详情
+    {path: '/PreviewApplyDetail', component: () => import(/* webpackChunkName: "channelList" */ '../views/PreviewApplyDetail')}, //预览报名详情
 
 ];
 
