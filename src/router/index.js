@@ -3,7 +3,8 @@ import {createRouter, createWebHistory} from 'vue-router'
 const routes = [
     // { path: '/', component: () => import(/* webpackChunkName: "channelList" */ '../components/RegistrationInProgress') }, //首页
 
-    {path: '/', component: () => import(/* webpackChunkName: "channelList" */ '../views/activity')}, //首页
+    // {path: '/', component: () => import(/* webpackChunkName: "channelList" */ '../views/activity')}, //首页
+    {path: '/', component: () => import(/* webpackChunkName: "channelList" */ '../components/RegistrationSteps')}, //报名步骤
     {path: '/SingUp', component: () => import(/* webpackChunkName: "channelList" */ '../components/SignUp')}, //频道页
     {path: '/MeetingDetail', component: () => import(/* webpackChunkName: "channelList" */ '../views/MeetingDetail')}, //活动详情
     {path: '/ApplyData', component: () => import(/* webpackChunkName: "channelList" */ '../views/ApplyData')}, //活动详情
