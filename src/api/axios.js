@@ -1,10 +1,9 @@
 import axios from "axios";
-import Qs from "qs";
-import * as Base64 from "js-base64";
 
 
 //设置超时
 axios.defaults.timeout = 10000;
+axios.defaults.baseURL="http://localhost:80";
 
 export default {
     post(url, data) {
@@ -12,13 +11,13 @@ export default {
             axios({
                 method: 'post',
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/json'
                 },
                 url,
-                data: Qs.stringify(data)
+                data: data
             })
                 .then(res => {
-                    resolve(JSON.parse(Base64.decode(res.data)))
+                    resolve(res.data)
                 })
                 .catch(err => {
                     reject(err)

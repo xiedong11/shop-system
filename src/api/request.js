@@ -31,12 +31,27 @@ const getMeetingNewsList = (data) => post('qwapi/getMeetingReport.do', data)
 
 const getMeetingEnrollInfo = (data) => get('api/cusContent/getEnrollInfo', data) //确认报名信息接口
 
+
+const regisiter = (data)=> post('addNewUser',data)
+const login = (data)=>post('login',data)
+const addNewProduct = (data) =>post("addProduct",data)
+const getAllList = () =>get('getAllList')
+const getProductById = (data) =>get('getProductById',data)
+const getProductByNumber = (data)=>get('getProductByNumber',data)
+const getProductByLocation = (data)=>get('getProductByLocation',data)
+
 //接口导出
 export {
     getConferenceList,
     getMeetingInfoDetail,
     getMeetingNewsList,
     getApplyData,
-    getMeetingEnrollInfo
-
+    getMeetingEnrollInfo,
+    regisiter,
+    login,
+    addNewProduct,
+    getAllList,
+    getProductById,
+    getProductByLocation,
+    getProductByNumber
 }
