@@ -1,7 +1,14 @@
 <template>
     <div class="page-root">
 
-        <img class="product-img" src=""/>
+        
+        <div>
+            <van-uploader :after-read="afterRead" >
+                <img class="product-img" :src="imgSrc">
+            </van-uploader>
+        </div>
+
+
         <input placeholder="请输入物品名称..." class="page-input" id = 'name'/>
         <input placeholder="请输入物品描述..." class="page-input" id = 'desc'/>
         <input placeholder="请输入物品分类..." class="page-input" id = 'type'/>
@@ -20,11 +27,21 @@
 <script>
     import {addNewProduct} from "../api/request";
     import {Dialog} from 'vant';
+
     export default {
         name: "AddProduct",
+        data() {
+            return {
+                imgSrc:''
+        };
+        },
         methods:{
+            afterRead(file) {
+                // console.log(file.content,111);
+                this.imgSrc = file.content
+            },
             addProduct: async function () {
-                let picture = "https://img0.baidu.com/it/u=2333105199,1446362766&fm=253&fmt=auto&app=138&f=JPEG?w=550&h=290";
+                let picture = this.imgSrc
                 let name = document.getElementById('name').value
                 let desc = document.getElementById('desc').value
                 let type = document.getElementById('type').value
@@ -82,8 +99,8 @@
         flex-direction: column;
 
         .product-img{
-            width: 100px;
-            height: 100px;
+            width: 150px;
+            height: 150px;
             margin: auto;
             margin-top: 30px;
         }

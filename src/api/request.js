@@ -39,6 +39,8 @@ const getAllList = () =>get('getAllList')
 const getProductById = (data) =>get('getProductById',data)
 const getProductByNumber = (data)=>get('getProductByNumber',data)
 const getProductByLocation = (data)=>get('getProductByLocation',data)
+const getAllUser = ()=>get('getAllUser')
+const deleteUser = (data)=>get('deleteUser',data)
 
 //接口导出
 export {
@@ -53,5 +55,7 @@ export {
     getAllList,
     getProductById,
     getProductByLocation,
-    getProductByNumber
+    getProductByNumber,
+    getAllUser,
+    deleteUser
 }

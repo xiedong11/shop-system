@@ -8,6 +8,7 @@ const routes = [
     {path: '/ProductList', component: () => import(/* webpackChunkName: "channelList" */ '../views/ProductList')}, //危化品列表
     {path: '/ProductDetail', component: () => import(/* webpackChunkName: "channelList" */ '../views/ProductDetail')}, //危化品详情
     {path: '/DataCount', component: () => import(/* webpackChunkName: "channelList" */ '../views/DataCount')}, //数据统计
+    {path: '/UserList', component: () => import(/* webpackChunkName: "channelList" */ '../views/admin/UserList')}, //数据统计
 
 
     {path: '/SingUp', component: () => import(/* webpackChunkName: "channelList" */ '../components/SignUp')}, //频道页
