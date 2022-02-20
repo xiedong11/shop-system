@@ -5,7 +5,7 @@
             <span class="btn-view" @click="addNewData">录入数据</span>
         </div>
        <div v-for='(item,index) in listResultArray' :key="index">
-           <div class="user-item">
+           <div class="user-item" @click="jumpDetail(item.id)">
                <div>
                    <span>用户名：{{item.userName}}</span>
                    <span>注册时间：{{item.createdAt}}</span>
@@ -25,6 +25,15 @@
     export default {
         name: "UserList",
         methods:{
+            jumpDetail:function (id) {
+
+                this.$router.push({
+                    path: '/SingleDataCount',
+                    query:{
+                        "id":id
+                    }
+                })
+            },
             jumpDataCount:function(){
                 this.$router.push({path: '/DataCount'})
             },

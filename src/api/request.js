@@ -14,22 +14,6 @@ const post = (url, data = {}) =>
         data,
     );
 
-// http://conf.qb.chinaqw.com
-
-
-const getConferenceList = data => get(`/api/conference/getconferencelist?action=getConferenceList`, data, 'aaa');
-
-// 报名后表单项,报名资料
-const getApplyData = data => get(`api/cusModel/selectUserMsg`, data)
-
-
-//获取会议详情 主域名 http://im.qb.chinaqw.com/
-const getMeetingInfoDetail = (data) => get("circle/getConference", data)
-
-
-const getMeetingNewsList = (data) => post('qwapi/getMeetingReport.do', data)
-
-const getMeetingEnrollInfo = (data) => get('api/cusContent/getEnrollInfo', data) //确认报名信息接口
 
 
 const regisiter = (data)=> post('addNewUser',data)
@@ -41,14 +25,14 @@ const getProductByNumber = (data)=>get('getProductByNumber',data)
 const getProductByLocation = (data)=>get('getProductByLocation',data)
 const getAllUser = ()=>get('getAllUser')
 const deleteUser = (data)=>get('deleteUser',data)
+const getAllListByUserId = (data) =>get('getAllListByUserId',data)
+const sendMessageToUser = (data) =>post('sendMessageToUser',data)
+const queryMessage = (data) =>get('queryMessage',data)
+const delMessage = (data) =>get('delMessage',data)
+
 
 //接口导出
 export {
-    getConferenceList,
-    getMeetingInfoDetail,
-    getMeetingNewsList,
-    getApplyData,
-    getMeetingEnrollInfo,
     regisiter,
     login,
     addNewProduct,
@@ -57,5 +41,9 @@ export {
     getProductByLocation,
     getProductByNumber,
     getAllUser,
-    deleteUser
+    deleteUser,
+    getAllListByUserId,
+    sendMessageToUser,
+    delMessage,
+    queryMessage
 }

@@ -52,6 +52,7 @@
                         return
                     }
                     this.$router.push({path: '/UserList'})
+                    localStorage.setItem('userId','admin')
                     return
                 }
 
@@ -62,6 +63,8 @@
                 let reusult = await login(data)
                 if (reusult.msg == '登录成功') {
                     this.$router.push({path: '/ProductList'})
+
+                    localStorage.setItem('userId',reusult.data.id)
                 } else {
                     Dialog.confirm({
                         title: '登录失败'

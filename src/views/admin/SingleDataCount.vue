@@ -2,28 +2,32 @@
     <div class="page-root">
 
         <span>
-            危化品危险等级划分统计
+            当前用户危化品危险等级划分统计
         </span>
 
         <!-- 记得给容器加宽高，不然无法显示 -->
         <div id="myChart" style="width: 500px; height: 300px;"></div>
 
         <span>
-            危化品危险地区划分统计
+            当前用户危化品危险地区划分统计
         </span>
         <div id="myChart2" style="width: 500px; height: 300px;"></div>
+
+
+        <span class='send-message' @click="sendMessage">发送预警信息</span>
     </div>
 </template>
 
 <script>
 
-    import {getAllList} from "../api/request";
+    import {getAllListByUserId, sendMessageToUser} from "../../api/request";
+    import {getSearchByName} from "../../util"
+    import {Dialog} from "vant";
     // 引入echarts
     var echarts = require('echarts');
 
-
     export default {
-        name: "DataCount",
+        name: "SingleDataCount",
         data() {
             return {};
         },
@@ -35,8 +39,26 @@
             }, 500);
         },
         methods: {
+            sendMessage: async function () {
+                let params = {
+                    'userId': getSearchByName('id')
+                }
+                let result = await sendMessageToUser(params)
+                if (result.msg == 'success') {
+                    Dialog.confirm({
+                        title: '发送成功'
+                    }).then(() => {
+
+                    }).catch(() => {
+                        // on cancel
+                    });
+                }
+            },
             async drawLine() {
-                let reusult = await getAllList()
+                let params = {
+                    'userId': getSearchByName('id')
+                }
+                let reusult = await getAllListByUserId(params)
                 let dataArray = reusult.data
                 let dataGroup = this.groupBy(dataArray, function (item) {
                     return [item.level]
@@ -164,6 +186,16 @@
             background: white;
             margin-left: auto;
             margin-right: auto;
+        }
+
+        .send-message {
+            background: orangered;
+            width: 30%;
+            margin: 30px auto;
+            color: white;
+            font-size: 1.0rem;
+            padding: 15px 10px;
+            border-radius: 10px;
         }
 
     }

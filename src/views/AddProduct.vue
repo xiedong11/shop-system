@@ -50,6 +50,7 @@
                 let location = document.getElementById('location').value
                 let level = document.getElementById('level').value
                 let number = document.getElementById('number').value
+                let userId = localStorage.getItem('userId')
 
                 let data = {
                     "picture":picture,
@@ -60,7 +61,8 @@
                     "deadline": deadline,
                     "location": location,
                     "level": level,
-                    "number": number
+                    "number": number,
+                    "userId":userId
                 }
 
                 let result = await addNewProduct(data)

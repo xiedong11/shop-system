@@ -8,14 +8,8 @@ const routes = [
     {path: '/ProductList', component: () => import(/* webpackChunkName: "channelList" */ '../views/ProductList')}, //危化品列表
     {path: '/ProductDetail', component: () => import(/* webpackChunkName: "channelList" */ '../views/ProductDetail')}, //危化品详情
     {path: '/DataCount', component: () => import(/* webpackChunkName: "channelList" */ '../views/DataCount')}, //数据统计
-    {path: '/UserList', component: () => import(/* webpackChunkName: "channelList" */ '../views/admin/UserList')}, //数据统计
-
-
-    {path: '/SingUp', component: () => import(/* webpackChunkName: "channelList" */ '../components/SignUp')}, //频道页
-    {path: '/MeetingDetail', component: () => import(/* webpackChunkName: "channelList" */ '../views/MeetingDetail')}, //活动详情
-    {path: '/ApplyData', component: () => import(/* webpackChunkName: "channelList" */ '../views/ApplyData')}, //活动详情
-    {path: '/PreviewApplyDetail', component: () => import(/* webpackChunkName: "channelList" */ '../views/PreviewApplyDetail')}, //预览报名详情
-
+    {path: '/UserList', component: () => import(/* webpackChunkName: "channelList" */ '../views/admin/UserList')}, //用户列表
+    {path: '/SingleDataCount', component: () => import(/* webpackChunkName: "channelList" */ '../views/admin/SingleDataCount')}, //数据统计
 ];
 
 // {path:'/wap/detail/:classify/zx/:year/:date/866:id.shtml',component:NewsDetail,exact:true},

@@ -13,14 +13,15 @@
         <span>创建时间：{{listResult.createAt}}</span>
 
     </div>
-    
+
 </template>
 
 <script>
     import {onMounted, reactive, toRefs} from "vue";
     import {getProductById} from "../api/request";
-    import { useRouter } from 'vue-router'
+    import {useRouter} from 'vue-router'
     import {Dialog} from "vant";
+
     export default {
         name: "ProductDetail",
 
@@ -28,8 +29,8 @@
             const router = useRouter()
 
             const state = reactive({
-                listResult:{},
-                id:router.currentRoute.value.query.id
+                listResult: {},
+                id: router.currentRoute.value.query.id
             });
 
 
@@ -39,30 +40,46 @@
 
             const getProduct = async () => {
                 let params = {
-                    'id':state.id
+                    'id': state.id
                 }
                 let reusult = await getProductById(params)
-                console.log(reusult.data,11111);
+                console.log(reusult.data, 11111);
                 state.listResult = reusult.data[0]
-                if (state.listResult.level==4){
+
+                var currentTime = new Date();
+                var deadline = state.listResult.deadline;
+                deadline = new Date(Date.parse(deadline));
+
+                if (currentTime > deadline) {
                     Dialog.alert({
-                        title:'风险等级较高',
-                        message:'当前风险等级为4'
+                        title: '危险提醒！！！',
+                        message: '超过安全期限！！'
                     });
-                }else if (state.listResult.level==5){
+
+                }else if (state.listResult.count > 10) {
                     Dialog.alert({
-                        title:'风险等级较高',
-                        message:'当前风险等级为5'
+                        title: '危险提醒！！！',
+                        message: '危险品超过数量限制'
                     });
-                }else if (state.listResult.level==6){
+                }  else if (state.listResult.level == 4) {
                     Dialog.alert({
-                        title:'风险等级较高',
-                        message:'当前风险等级为6'
+                        title: '风险等级较高',
+                        message: '当前风险等级为4'
                     });
-                }else if (state.listResult.level==7){
+                } else if (state.listResult.level == 5) {
                     Dialog.alert({
-                        title:'风险等级较高',
-                        message:'当前风险等级为7'
+                        title: '风险等级较高',
+                        message: '当前风险等级为5'
+                    });
+                } else if (state.listResult.level == 6) {
+                    Dialog.alert({
+                        title: '风险等级较高',
+                        message: '当前风险等级为6'
+                    });
+                } else if (state.listResult.level == 7) {
+                    Dialog.alert({
+                        title: '风险等级较高',
+                        message: '当前风险等级为7'
                     });
                 }
 
@@ -77,16 +94,17 @@
 
 <style scoped lang="less">
 
-    .page-root{
+    .page-root {
         display: flex;
         flex-direction: column;
         background: white;
 
-        img{
+        img {
             margin: 10px 20%;
             margin-bottom: 30px;
         }
-        span{
+
+        span {
             text-align: left;
             margin-left: 20%;
             margin-top: 10px;
