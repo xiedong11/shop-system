@@ -2,29 +2,21 @@
     <div class="page-root">
 
 
-        <div class="data-view-div">
-            <span class="btn-view" @click="jumpDataCount">数据统计</span>
-            <span class="btn-view" @click="addNewData">录入数据</span>
-        </div>
-        <div class="search-view">
-            <input class='search-input' id='search-input' placeholder="请输入关键字..."/>
-            <span @click="getProductByLocationResult">地区查询</span>
-            <span @click="getProductByNumberResult">编号查询</span>
-        </div>
-
+        <span>我的借阅记录</span>
         <div class="list-view">
             <div v-for='(item,index) in listResultArray' :key='index'>
                 <div class="product-item" @click="jumpDetail(item.id)">
-                    <span>编号：{{item.number}}</span>
+
                     <img :src="item!=null?item.picture:''"/>
                     <div class="item-desc">
-                        <span>危险等级：{{item.level}}</span>
-                        <span>{{item.name}}</span>
-                        <span>{{item.productDesc}}</span>
+                        <span>分类：{{item.type}}</span>
+                        <span>书名：{{item.title}}</span>
                     </div>
                 </div>
             </div>
         </div>
+
+
     </div>
 
 
@@ -32,28 +24,23 @@
 
 <script>
     import {onMounted, toRefs, reactive} from "vue";
-    import {getAllList, getProductByLocation, getProductByNumber, queryMessage, delMessage} from "../api/request";
-    import {Dialog} from "vant";
+    import {getAllRentListByUserId, getGoodsByName, getGoodsByType} from "../api/request";
 
     export default {
-        name: "ProductList",
         methods: {
-            jumpDataCount: function () {
-                this.$router.push({path: '/DataCount'})
-            },
-            addNewData: function () {
-                this.$router.push({path: '/AddProduct'})
-            },
             jumpDetail: function (id) {
 
                 this.$router.push({
-                    path: '/ProductDetail',
+                    path: '/GoodsDetail',
                     query: {
                         "id": id
                     }
                 })
             },
+            jumpNewComment: function () {
+                this.$router.push({path: '/NewComment'})
 
+            },
 
         },
         setup() {
@@ -65,61 +52,37 @@
 
                 getAllProductList();
 
-                queryMessageInfo();
+
             });
 
-            const queryMessageInfo = async () => {
-                let params = {
-                    'userId': localStorage.getItem('userId')
-                }
-                let result = await queryMessage(params)
-                if (result.msg == 'success' && result.data.length > 0) {
-                    Dialog.confirm({
-                        title: '预警信息',
-                        message: "请及时检查管理员发来的预警信息"
-                    }).then(() => {
-                        let params = {
-                            'userId': localStorage.getItem('userId')
-                        }
-                        delMessage(params).then((res) => {
-                            if (res.data == 'success') {
-                                Dialog.confirm({
-                                    title: '删除成功'
-                                })
-                            }
-                        })
-
-                    }).catch(() => {
-                        // on cancel
-                    });
-                }
-            }
-
             const getAllProductList = async () => {
-                let reusult = await getAllList()
+                let data={
+                    "userId": localStorage.getItem('userId')
+                }
+                let reusult = await getAllRentListByUserId(data)
 
                 console.log(reusult.data, 11111);
                 state.listResultArray = reusult.data
 
             };
-            const getProductByLocationResult = async () => {
-                let location = document.getElementById('search-input').value
+            const getProductByTitle = async () => {
+                let name = document.getElementById('search-input').value
                 let params = {
-                    'location': location
+                    'title': name
                 }
-                let result = await getProductByLocation(params)
+                let result = await getGoodsByName(params)
                 state.listResultArray = result.data
             };
-            const getProductByNumberResult = async () => {
-                let number = document.getElementById('search-input').value
+            const getProductByType = async () => {
+                let type = document.getElementById('search-input').value
                 let params = {
-                    'number': number
+                    'type': type
                 }
-                let result = await getProductByNumber(params)
+                let result = await getGoodsByType(params)
                 state.listResultArray = result.data
             }
             return {
-                ...toRefs(state), getProductByLocationResult, getProductByNumberResult
+                ...toRefs(state), getProductByTitle, getProductByType
             }
 
         },
@@ -168,7 +131,7 @@
                 border-radius: 10px;
                 background: #42b983;
                 color: white;
-                padding: 10px 20px;
+                padding: 10px 40px;
 
             }
         }
@@ -213,6 +176,20 @@
 
                 }
             }
+        }
+
+        .new-comment {
+            background: #ea827d;
+            color: white;
+            font-size: 1.8rem;
+            width: 80px;
+            height: 80px;
+            text-align: center;
+            position: fixed;
+            bottom: 50px;
+            right: 100px;
+            line-height: 80px;
+            border-radius: 50px;
         }
     }
 </style>

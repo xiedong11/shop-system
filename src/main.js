@@ -12,10 +12,13 @@ import axios from 'axios';
 
 import VueAxios from 'vue-axios';
 
-// import '../static/css/resetui.css';//vant重置UI样式
 
+import i18n from './language/i18n'
 
 const app = createApp(App);
+app.use(i18n);
+
+
 app.use(Vant);
 // app.use(store);
 app.use(router);
@@ -23,8 +26,4 @@ app.use(router);
 app.use(VueAxios, axios);
 
 app.mount('#app')
-
-
-
-// createApp(App).mount('#app')
 

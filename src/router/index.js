@@ -4,12 +4,20 @@ const routes = [
     // {path: '/', component: () => import(/* webpackChunkName: "channelList" */ '../views/activity')}, //首页
     {path: '/', component: () => import(/* webpackChunkName: "channelList" */ '../views/Login')}, //登录
     {path: '/Register', component: () => import(/* webpackChunkName: "channelList" */ '../views/Register')}, //注册
-    {path: '/AddProduct', component: () => import(/* webpackChunkName: "channelList" */ '../views/AddProduct')}, //添加危化品
-    {path: '/ProductList', component: () => import(/* webpackChunkName: "channelList" */ '../views/ProductList')}, //危化品列表
-    {path: '/ProductDetail', component: () => import(/* webpackChunkName: "channelList" */ '../views/ProductDetail')}, //危化品详情
-    {path: '/DataCount', component: () => import(/* webpackChunkName: "channelList" */ '../views/DataCount')}, //数据统计
-    {path: '/UserList', component: () => import(/* webpackChunkName: "channelList" */ '../views/admin/UserList')}, //用户列表
-    {path: '/SingleDataCount', component: () => import(/* webpackChunkName: "channelList" */ '../views/admin/SingleDataCount')}, //数据统计
+    {path: '/AddGoods', component: () => import(/* webpackChunkName: "channelList" */ '../views/AddGoods')},
+    {path: '/GoodsList', component: () => import(/* webpackChunkName: "channelList" */ '../views/GoodsList')},
+    {path: '/RentHistory', component: () => import(/* webpackChunkName: "channelList" */ '../views/RentHistory')},
+    {path: '/UserHome', component: () => import(/* webpackChunkName: "channelList" */ '../views/UserHome')},
+    {path: '/GoodsDetail', component: () => import(/* webpackChunkName: "channelList" */ '../views/GoodsDetail')},
+    {path: '/ChatRoom', component: () => import(/* webpackChunkName: "channelList" */ '../views/ChatRoom')},
+    {path: '/DataCount', component: () => import(/* webpackChunkName: "channelList" */ '../views/admin/DataCount')},
+    {path: '/UserList', component: () => import(/* webpackChunkName: "channelList" */ '../views/admin/UserList')},
+    {path: '/AdminHome', component: () => import(/* webpackChunkName: "channelList" */ '../views/admin/AdminHome')},
+    {path: '/ManageGoods', component: () => import(/* webpackChunkName: "channelList" */ '../views/admin/ManageGoods')},
+    {path: '/FeedbackList', component: () => import(/* webpackChunkName: "channelList" */ '../views/admin/FeedbackList')},
+    {path: '/CollectionList', component: () => import(/* webpackChunkName: "channelList" */ '../views/CollectionList')},
+    {path: '/UpdateUserInfo', component: () => import(/* webpackChunkName: "channelList" */ '../views/UpdateUserInfo')},
+    {path: '/SingleDataCount', component: () => import(/* webpackChunkName: "channelList" */ '../views/admin/SingleDataCount')},
 ];
 
 // {path:'/wap/detail/:classify/zx/:year/:date/866:id.shtml',component:NewsDetail,exact:true},

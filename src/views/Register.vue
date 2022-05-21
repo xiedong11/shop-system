@@ -3,12 +3,12 @@
 
         <div class="register-root">
 
-            <span class="page-title">危化品管理系统</span>
-            <input class="register-input" placeholder="请输入账号"  id='number' />
-            <input class="register-input" placeholder="请输入密码 " id="password"/>
-            <input class="register-input" placeholder="请输入手机号" id="phone"/>
+            <span class="page-title">{{$t(`message.regisiter_top_info`)}}</span>
+            <input class="register-input" :placeholder="$t(`message.input_userNumber`)" id='number'/>
+            <input class="register-input" :placeholder="$t(`message.input_password`)" id="password"/>
+            <input class="register-input" :placeholder="$t(`message.input_phone`)" id="phone"/>
 
-            <span class="btn-register" @click="doRegister">注册</span>
+            <span class="btn-register" @click="doRegister">{{$t(`message.btn_regisiter`)}}</span>
         </div>
     </div>
 </template>
@@ -16,9 +16,10 @@
 <script>
     import {regisiter} from "../api/request";
     import {Dialog} from 'vant';
+
     export default {
         name: "Register",
-        methods:{
+        methods: {
             doRegister: async function () {
                 var number = document.getElementById('number').value
                 var password = document.getElementById('password').value
@@ -32,22 +33,22 @@
 
                 let result = await regisiter(data)
 
-                if(result.msg=='success'){
+                if (result.msg == 'success') {
                     Dialog.confirm({
-                        title:'注册成功'
+                        title: '注册成功'
                     }).then(() => {
 
-                        }).catch(() => {
-                            // on cancel
-                        });
-                }else {
+                    }).catch(() => {
+                        // on cancel
+                    });
+                } else {
                     Dialog.confirm({
-                        title:'注册失败'
+                        title: '注册失败'
                     }).then(() => {
                         // window.location.href = "tel:" + this.detailResult.hotLine;
                     }).catch(() => {
-                            // on cancel
-                        });
+                        // on cancel
+                    });
                 }
             }
         }
@@ -55,21 +56,23 @@
 </script>
 
 <style scoped lang="less">
-    .register-root{
-        background: #f7f7f7;
+    .register-root {
+        /*background-image: url("../image/ic_arrow_down.png");*/
         display: flex;
         flex-direction: column;
         justify-content: center;
         height: 100vh;
-        margin: 0px 25%;
         min-width: 500px;
 
 
-        .page-title{
-            font-size: 2rem;
+        .page-title {
+            font-size: 3rem;
+            color: red;
+            font-weight: bold;
             margin-bottom: 50px;
         }
-        .register-input{
+
+        .register-input {
             margin-left: auto;
             margin-right: auto;
             margin-top: 30px;
@@ -81,21 +84,15 @@
             font-size: 0.9rem;
         }
 
-        .go-register{
-            margin-top: 20px;
-            font-size: 1.1rem;
-            margin-left: 60%;
-        }
-
-        .btn-register{
-            background: #2facff;
+        .btn-register {
+            background: black;
             width: 20%;
             padding: 10px 30px;
             margin-left: auto;
             border-radius: 20px;
             margin-right: auto;
             color: white;
-            margin-top: 30px;
+            margin-top: 60px;
             font-size: 1.1rem;
         }
     }

@@ -3,18 +3,19 @@
 
         <div class="login-root">
 
-            <span class="page-title">危化品管理系统</span>
-            <input class="login-input" placeholder="请输入账号" id='number'/>
-            <input class="login-input" placeholder="请输入密码" id="password"/>
 
-            <span class="go-register" @click="goRegisterPage">去注册？</span>
+
+            <input class="login-input" :placeholder="$t(`message.input_userNumber`)" id='number'/>
+            <input :placeholder="$t(`message.input_password`)" class="login-input"  id="password"/>
+
+            <span class="go-register" @click="goRegisterPage">{{$t(`message.go_register`)}}</span>
 
 
             <van-radio-group v-model="radio" direction="horizontal" class="checkbox-view">
-                <van-radio name="1" @click="setCheck(1)">普通用户</van-radio>
-                <van-radio name="2" @click="setCheck(2)">管理员</van-radio>
+                <van-radio name="1" @click="setCheck(1)">{{$t(`message.normal_user`)}}</van-radio>
+                <van-radio name="2" @click="setCheck(2)">{{$t(`message.admin_user`)}}</van-radio>
             </van-radio-group>
-            <span class="btn-login" @click="goMainPage">登录</span>
+            <span class="btn-login" @click="goMainPage">{{$t(`message.btn_login`)}}</span>
         </div>
     </div>
 </template>
@@ -51,7 +52,7 @@
                         })
                         return
                     }
-                    this.$router.push({path: '/UserList'})
+                    this.$router.push({path: '/AdminHome'})
                     localStorage.setItem('userId','admin')
                     return
                 }
@@ -62,9 +63,10 @@
                 }
                 let reusult = await login(data)
                 if (reusult.msg == '登录成功') {
-                    this.$router.push({path: '/ProductList'})
+                    this.$router.push({path: '/UserHome'})
 
                     localStorage.setItem('userId',reusult.data.id)
+                    localStorage.setItem('userName',reusult.data.userName)
                 } else {
                     Dialog.confirm({
                         title: '登录失败'
@@ -81,16 +83,18 @@
 
 <style scoped lang="less">
     .login-root {
-        background: #f7f7f7;
+        /*background-image: url("../image/ic_arrow_down.png");*/
         display: flex;
         flex-direction: column;
         justify-content: center;
         height: 100vh;
-        margin: 0px 25%;
+        margin: 0px 0%;
         min-width: 500px;
 
         .page-title {
-            font-size: 2rem;
+            font-size: 3rem;
+            color: red;
+            font-weight: bold;
             margin-bottom: 50px;
         }
 
@@ -110,10 +114,11 @@
             margin-top: 20px;
             font-size: 1.1rem;
             margin-left: 60%;
+            color: red;
         }
 
         .btn-login {
-            background: #2facff;
+            background: black;
             width: 20%;
             padding: 10px 30px;
             margin-left: auto;
@@ -129,8 +134,6 @@
             margin-top: 30px;
             display: flex;
             flex-direction: row;
-
-
         }
     }
 

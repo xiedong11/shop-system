@@ -2,32 +2,25 @@
     <div class="page-root">
 
         <span>
-            当前用户危化品危险等级划分统计
+            {{$t(`message.goods_data_type`)}}
         </span>
 
         <!-- 记得给容器加宽高，不然无法显示 -->
         <div id="myChart" style="width: 500px; height: 300px;"></div>
 
-        <span>
-            当前用户危化品危险地区划分统计
-        </span>
-        <div id="myChart2" style="width: 500px; height: 300px;"></div>
 
-
-        <span class='send-message' @click="sendMessage">发送预警信息</span>
     </div>
 </template>
 
 <script>
 
-    import {getAllListByUserId, sendMessageToUser} from "../../api/request";
-    import {getSearchByName} from "../../util"
-    import {Dialog} from "vant";
+    import {getAllGoodsByUserId} from "../../api/request";
     // 引入echarts
     var echarts = require('echarts');
 
+
     export default {
-        name: "SingleDataCount",
+        name: "DataCount",
         data() {
             return {};
         },
@@ -39,29 +32,14 @@
             }, 500);
         },
         methods: {
-            sendMessage: async function () {
-                let params = {
-                    'userId': getSearchByName('id')
-                }
-                let result = await sendMessageToUser(params)
-                if (result.msg == 'success') {
-                    Dialog.confirm({
-                        title: '发送成功'
-                    }).then(() => {
-
-                    }).catch(() => {
-                        // on cancel
-                    });
-                }
-            },
             async drawLine() {
                 let params = {
-                    'userId': getSearchByName('id')
+                    "userId": this.$router.currentRoute.value.query.id
                 }
-                let reusult = await getAllListByUserId(params)
+                let reusult = await getAllGoodsByUserId(params)
                 let dataArray = reusult.data
                 let dataGroup = this.groupBy(dataArray, function (item) {
-                    return [item.level]
+                    return [item.type]
                 })
 
                 console.log(dataGroup[0], 11111)
@@ -69,7 +47,7 @@
                 for (let i = 0; i < dataGroup.length; i++) {
                     data.push({
                         value: dataGroup[i].length,
-                        name: '危险等级' + dataGroup[i][0].level
+                        name: '分类：' + dataGroup[i][0].type
                     },)
                 }
 
@@ -108,46 +86,6 @@
                     ]
                 });
 
-
-                //地区划分
-                let dataLocationGroup = this.groupBy(dataArray, function (item) {
-                    return [item.location]
-                })
-
-                console.log(dataLocationGroup[0], 11111)
-                let dataLocation = [];
-                let dataLocationXArr = [];
-                for (let i = 0; i < dataLocationGroup.length; i++) {
-                    dataLocation.push({
-                        value: dataLocationGroup[i].length,
-                        name: '等级' + dataLocationGroup[i][0].location
-                    },)
-                    dataLocationXArr.push(dataLocationGroup[i][0].location)
-                }
-                // 初始化echarts实例
-                let myChart2 = echarts.init(document.getElementById("myChart2"));
-
-                // 屏幕尺寸变化时，重新调整图表元素大小
-                let sizeFun2 = function () {
-                    myChart2.resize();
-                };
-                window.addEventListener("resize", sizeFun2);
-
-                // 绘制图表
-                myChart2.setOption({
-                    xAxis: {
-                        type: 'category',
-                        data: dataLocationXArr
-                    },
-                    yAxis: {
-                        type: 'value'
-                    },
-                    series: [{
-                        data: dataLocation,
-                        type: 'line',
-                        smooth: true
-                    }],
-                });
             },
 
 
@@ -186,16 +124,6 @@
             background: white;
             margin-left: auto;
             margin-right: auto;
-        }
-
-        .send-message {
-            background: orangered;
-            width: 30%;
-            margin: 30px auto;
-            color: white;
-            font-size: 1.0rem;
-            padding: 15px 10px;
-            border-radius: 10px;
         }
 
     }
